@@ -36,7 +36,7 @@
                   </Group>
                   <Group>
                      <children>
-                        <Label prefHeight="30.0" prefWidth="1000.0" text="Label">
+                        <Label prefHeight="30.0" prefWidth="1000.0" text="3.  A legkevesebb kreditértékű tárgyak nevei">
                            <font>
                               <Font name="System Bold" size="32.0" />
                            </font>

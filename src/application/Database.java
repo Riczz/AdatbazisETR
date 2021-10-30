@@ -461,6 +461,28 @@ public class Database {
         return users;
     }
 
+    public ObservableList<QueriesController.Query3> extraQuery3() {
+        ObservableList<QueriesController.Query3> items = FXCollections.observableArrayList();
+        String sql = "SELECT targy.nev, targy.kreditertek FROM targy WHERE kreditertek = (SELECT MIN(targy.kreditertek) FROM targy)";
+
+        try {
+            connect();
+            Statement st = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()) {
+                items.add(new QueriesController.Query3(
+                        rs.getString(1),
+                        rs.getInt(2)
+                ));
+            }
+            return items;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return items;
+        } finally {
+            close();
+        }
+    }
 
     public ObservableList<QueriesController.Query2> extraQuery2() {
         ObservableList<QueriesController.Query2> items = FXCollections.observableArrayList();

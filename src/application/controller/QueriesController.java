@@ -18,6 +18,8 @@ public class QueriesController {
     TableView<Query1> table1;
     @FXML
     TableView<Query2> table2;
+    @FXML
+    TableView<Query3> table3;
 
     public static class Query1 {
             private SimpleStringProperty county;
@@ -55,6 +57,24 @@ public class QueriesController {
         }
     }
 
+    public static class Query3 {
+        private SimpleStringProperty name;
+        private SimpleIntegerProperty credits;
+
+        public Query3(String name, int credits) {
+            this.name = new SimpleStringProperty(name);
+            this.credits = new SimpleIntegerProperty(credits);
+        }
+
+        public String getName() {
+            return name.get();
+        }
+
+        public int getCredits() {
+            return credits.get();
+        }
+    }
+
     @FXML
     public void initialize() {
         Database db = new Database(false);
@@ -83,6 +103,17 @@ public class QueriesController {
         table2.getColumns().addAll(subCode, avg);
         table2.setItems(db.extraQuery2());
 
+        //Harmadik lekérdezés
+        DataColumn name = new DataColumn("Név");
+        name.setCellFactory(TextFieldTableCell.forTableColumn());
+        name.setCellValueFactory(new PropertyValueFactory<Query3, String>("name"));
+
+        DataColumn credits = new DataColumn("Kreditérték");
+        credits.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+        credits.setCellValueFactory(new PropertyValueFactory<Query3, Integer>("credits"));
+
+        table3.getColumns().addAll(name, credits);
+        table3.setItems(db.extraQuery3());
 
     }
 }
