@@ -1,6 +1,5 @@
 package application.model.pojo;
 
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 import java.text.SimpleDateFormat;
@@ -9,8 +8,7 @@ import java.util.Date;
 public class PersonalData {
 
     public static final SimpleDateFormat DATEFORM = new SimpleDateFormat("yyyy-MM-dd");
-    private SimpleStringProperty neptun, birthPlace, birthName, birthDate, birthCounty, birthCountry;
-    private SimpleBooleanProperty gender;
+    private SimpleStringProperty neptun, birthPlace, birthName, birthDate, birthCounty, birthCountry, gender;
 
     public PersonalData(String neptun, String bPlace, String bName, Date bDate, String bCounty, String bCountry, String gender) {
         this.neptun = new SimpleStringProperty(neptun);
@@ -19,7 +17,7 @@ public class PersonalData {
         this.birthDate = new SimpleStringProperty(DATEFORM.format(bDate));
         this.birthCounty = new SimpleStringProperty(bCounty);
         this.birthCountry = new SimpleStringProperty(bCountry);
-        this.gender = new SimpleBooleanProperty(gender.equals("nő"));
+        this.gender = new SimpleStringProperty(gender);
     }
 
     public String getNeptun() {
@@ -46,7 +44,7 @@ public class PersonalData {
         return birthCountry.get();
     }
 
-    public boolean getGender() {
+    public String getGender() {
         return gender.get();
     }
 

@@ -1,6 +1,5 @@
 package application.view.tables;
 
-import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import application.model.pojo.User;
@@ -27,16 +26,8 @@ public class UserTable extends DataTable<User> {
         firstname.setCellFactory(TextFieldTableCell.forTableColumn());
         firstname.setCellValueFactory(new PropertyValueFactory<User, String>("firstname"));
 
-        DataColumn student = new DataColumn("hallgato");
-        student.setCellFactory(tableColumn -> new CheckBoxTableCell<>());
-        student.setCellValueFactory(new PropertyValueFactory<User, Boolean>("student"));
-
-        DataColumn teacher = new DataColumn("oktato");
-        teacher.setCellFactory(tableColumn -> new CheckBoxTableCell<>());
-        teacher.setCellValueFactory(new PropertyValueFactory<User, Boolean>("teacher"));
-
         refresh();
-        getColumns().addAll(neptun, lastname, firstname, student, teacher);
+        getColumns().addAll(neptun, lastname, firstname);
     }
 
     @Override

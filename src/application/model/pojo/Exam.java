@@ -3,18 +3,19 @@ package application.model.pojo;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.sql.Timestamp;
 
 public class Exam {
 
-    public static final SimpleDateFormat DATEFORM = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private SimpleStringProperty subCode, time;
     private SimpleIntegerProperty roomNum;
 
-    public Exam(String subCode, Date time, int roomNum) {
+    public Exam(String subCode, Timestamp time, int roomNum) {
+        String formattedTime = time.toString();
+        formattedTime = formattedTime.substring(0,formattedTime.lastIndexOf('.'));
+
         this.subCode = new SimpleStringProperty(subCode);
-        this.time = new SimpleStringProperty(DATEFORM.format(time));
+        this.time = new SimpleStringProperty(formattedTime);
         this.roomNum = new SimpleIntegerProperty(roomNum);
     }
 

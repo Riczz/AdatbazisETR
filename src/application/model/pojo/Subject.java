@@ -1,9 +1,8 @@
 package application.model.pojo;
 
+import application.Database;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
-
-import java.util.Locale;
 
 public class Subject {
 
@@ -12,7 +11,7 @@ public class Subject {
 
     public Subject(String sub_code, String reqSub_code, String neptun, String name, int credits, int hours) {
         this.sub_code = new SimpleStringProperty(sub_code);
-        this.reqSub_code = reqSub_code.toLowerCase(Locale.ROOT).equals("null") ? null : new SimpleStringProperty(reqSub_code);
+        this.reqSub_code = reqSub_code.equalsIgnoreCase("null") ? new SimpleStringProperty(Database.NULLSTR) : new SimpleStringProperty(reqSub_code);
         this.neptun = new SimpleStringProperty(neptun);
         this.name = new SimpleStringProperty(name);
         this.credits = new SimpleIntegerProperty(credits);
@@ -43,7 +42,4 @@ public class Subject {
         return hours.get();
     }
 
-    public boolean isNull() {
-        return reqSub_code.getBean() == null;
-    }
 }

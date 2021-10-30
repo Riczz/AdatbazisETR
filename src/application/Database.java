@@ -57,7 +57,7 @@ public class Database {
             String sql = "INSERT INTO vizsga VALUES(?, ?, ?)";
             PreparedStatement st = conn.prepareStatement(sql);
             st.setString(1, exam.getSubCode());
-            st.setDate(2, Date.valueOf(exam.getTime()));
+            st.setTimestamp(2, Timestamp.valueOf(exam.getTime()));
             st.setInt(3, exam.getRoomNum());
             st.execute();
             return true;
@@ -76,7 +76,7 @@ public class Database {
             String sql = "INSERT INTO targy VALUES(?, ?, ?, ?, ?, ?)";
             PreparedStatement st = conn.prepareStatement(sql);
             st.setString(1, subject.getSub_code());
-            if (subject.isNull()) {
+            if (isNull(subject.getReqSub_code())) {
                 st.setNull(2, Types.VARCHAR);
             } else {
                 st.setString(2, subject.getReqSub_code());
@@ -107,7 +107,7 @@ public class Database {
             st.setDate(4, Date.valueOf(personalData.getBirthDate()));
             st.setString(5, personalData.getBirthCounty());
             st.setString(6, personalData.getBirthCountry());
-            st.setBoolean(7, personalData.getGender());
+            st.setBoolean(7, personalData.getGender().equalsIgnoreCase("nő"));
             st.execute();
             return true;
         } catch (SQLException e) {
@@ -167,10 +167,10 @@ public class Database {
             String sql = "UPDATE vizsga SET targy_kod = ?, idopont = ?, teremszam = ? WHERE targy_kod = ? AND idopont = ?";
             PreparedStatement st = conn.prepareStatement(sql);
             st.setString(1, newExam.getSubCode());
-            st.setDate(2, Date.valueOf(newExam.getTime()));
+            st.setTimestamp(2, Timestamp.valueOf(exam.getTime()));
             st.setInt(3, newExam.getRoomNum());
             st.setString(4, exam.getSubCode());
-            st.setString(5, exam.getTime());
+            st.setTimestamp(5, Timestamp.valueOf(exam.getTime()));
             st.execute();
             return true;
         } catch (SQLException e) {
@@ -189,7 +189,7 @@ public class Database {
                     "heti_oraszam = ? WHERE targy_kod = ?";
             PreparedStatement st = conn.prepareStatement(sql);
             st.setString(1, newSubject.getSub_code());
-            if (newSubject.getReqSub_code() == null) {
+            if (isNull(newSubject.getReqSub_code())) {
                 st.setNull(2, Types.VARCHAR);
             } else {
                 st.setString(2, newSubject.getReqSub_code());
@@ -222,7 +222,7 @@ public class Database {
             st.setDate(4, Date.valueOf(newPersonalData.getBirthDate()));
             st.setString(5, newPersonalData.getBirthCounty());
             st.setString(6, newPersonalData.getBirthCountry());
-            st.setBoolean(7, newPersonalData.getGender());
+            st.setBoolean(7, newPersonalData.getGender().equalsIgnoreCase("nő"));
             st.setString(8, personalData.getNeptun());
             st.execute();
             return true;
@@ -278,7 +278,8 @@ public class Database {
             String sql = "DELETE FROM vizsga WHERE targy_kod = ? AND idopont = ?";
             PreparedStatement st = conn.prepareStatement(sql);
             st.setString(1, exam.getSubCode());
-            st.setString(2, exam.getTime());
+            st.setTimestamp(2, Timestamp.valueOf(exam.getTime()));
+            st.execute();
         } catch (SQLException e) {
             e.printStackTrace();
             new AlertDialog(Alert.AlertType.ERROR, "Hiba", "Tárgy törlése sikertelen!");
@@ -367,7 +368,7 @@ public class Database {
             while (rs.next()) {
                 Exam exam = new Exam(
                         rs.getString("targy_kod"),
-                        rs.getDate("idopont"),
+                        rs.getTimestamp("idopont"),
                         rs.getInt("teremszam")
                 );
                 exams.add(exam);
@@ -549,5 +550,12 @@ public class Database {
                 exception.printStackTrace();
             }
         }
+    }
+
+    public static boolean isNull(String s) {
+        return (s.equalsIgnoreCase("-") ||
+                s.equalsIgnoreCase("null") ||
+                s.equalsIgnoreCase("")
+        );
     }
 }

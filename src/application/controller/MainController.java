@@ -54,10 +54,10 @@ public class MainController {
     public void initialize() {
         Database database = new Database();
         database.fillWithTables(tabPane);
-
         tabPane.getTabs().forEach(this::createTable);
         refreshBtn.setOnAction(actionEvent -> refresh(true));
-
+        tabPane.getSelectionModel().selectLast();
+        tabPane.getSelectionModel().selectFirst();
         database.close();
     }
 
