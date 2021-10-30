@@ -1,15 +1,18 @@
-package view.tables;
+package application.view.tables;
 
+import application.model.pojo.PersonalData;
+import application.model.pojo.User;
+import application.view.DataColumn;
+import application.view.DataTable;
+import application.view.dialog.AlertDialog;
+import javafx.scene.control.Alert;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
-import model.pojo.PersonalData;
-import model.pojo.User;
-import sample.Database;
-import view.DataColumn;
-import view.DataTable;
 
+import java.text.ParseException;
 import java.util.Date;
+import java.util.List;
 
 public class PersonalDataTable extends DataTable<PersonalData> {
 
@@ -49,36 +52,49 @@ public class PersonalDataTable extends DataTable<PersonalData> {
     }
 
     @Override
-    public void insert() {
-        db.connect();
-
-        db.close();
+    public boolean insert(List<String> input) {
+        try {
+            PersonalData personalData = new PersonalData(
+                    input.get(0), input.get(1), input.get(2),
+                    PersonalData.DATEFORM.parse(input.get(3)),
+                    input.get(4), input.get(5), input.get(6)
+            );
+            if (!db.insert(personalData)) return false;
+            refresh();
+            return true;
+        } catch (ParseException e) {
+            e.printStackTrace();
+            new AlertDialog(Alert.AlertType.ERROR, "Hiba", "Helytelen dátum formátum!");
+            return false;
+        }
     }
 
     @Override
-    public void modify(int i) {
-        db.connect();
-
-        db.close();
+    public boolean update(int i, List<String> input) {
+        try {
+            PersonalData personalData = new PersonalData(
+                    input.get(0), input.get(1), input.get(2),
+                    PersonalData.DATEFORM.parse(input.get(3)),
+                    input.get(4), input.get(5), input.get(6)
+            );
+            if (!db.update(getItems().get(i),personalData)) return false;
+            refresh();
+            return true;
+        } catch (ParseException e) {
+            e.printStackTrace();
+            new AlertDialog(Alert.AlertType.ERROR, "Hiba", "Helytelen dátum formátum!");
+            return false;
+        }
     }
 
     @Override
     public void delete(int i) {
-        data.remove(i);
-        getItems().remove(i);
-
-        db.connect();
-        db.close();
+        db.delete(getItems().get(i));
+        refresh();
     }
 
     @Override
     public void refresh() {
-        data.clear();
-        getItems().clear();
-
-        db.connect();
-        data = db.getPersonalDatas();
-        setItems(data);
-        db.close();
+        setItems(db.getPersonalDatas());
     }
 }

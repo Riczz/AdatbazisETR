@@ -1,5 +1,10 @@
-package sample;
+package application.controller;
 
+import application.Database;
+import application.Main;
+import application.model.DataInfo;
+import application.view.DataTable;
+import application.view.dialog.AlertDialog;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,8 +20,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import view.dialog.AlertDialog;
-import view.DataTable;
 
 import java.io.IOException;
 
@@ -37,6 +40,9 @@ public class MainController {
     @FXML
     private Button refreshBtn;
 
+    private FormController controller;
+    private Stage formStage;
+
     private DataTable currentTable;
     private Tab currentTab;
 
@@ -47,75 +53,102 @@ public class MainController {
     @FXML
     public void initialize() {
         Database database = new Database();
-        tabPane.getSelectionModel().select(0);
         database.fillWithTables(tabPane);
-        tabPane.getTabs().forEach(database::createTable);
+
+        tabPane.getTabs().forEach(this::createTable);
+        refreshBtn.setOnAction(actionEvent -> refresh(true));
+
         database.close();
     }
 
     @FXML
-    public void insert() {
-
+    private void showQueries() {
         try {
-            FXMLLoader loader = new FXMLLoader(Main.class.getResource("insert.fxml"));
+            FXMLLoader loader = new FXMLLoader(Main.class.getResource("queries.fxml"));
             Parent root = loader.load();
-
-            FormController controller = loader.getController();
-
-            controller.addAttribute(getCurrentTable());
-            controller.setLabel(getCurrentTab().getText());
-
-
-            Stage insertStage = new Stage(StageStyle.UTILITY);
-            Scene insertScene = new Scene(root);
-            insertStage.setScene(insertScene);
-            insertStage.setResizable(false);
-            insertStage.showAndWait();
+            stage = new Stage(StageStyle.DECORATED);
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        currentTable.insert();
+    }
+
+    private void showForm() {
+        try {
+            FXMLLoader loader = new FXMLLoader(Main.class.getResource("insert.fxml"));
+            Parent root = loader.load();
+            controller = loader.getController();
+            controller.addAttribute(getCurrentTable());
+            controller.setLabel(getCurrentTab().getText());
+            formStage = new Stage(StageStyle.UTILITY);
+            Scene formScene = new Scene(root);
+            formStage.setScene(formScene);
+            formStage.setResizable(false);
+            formStage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void insert() {
+        showForm();
+        if (!getCurrentTable().insert(controller.getInput())) insert();
     }
 
     @FXML
     public void modify() {
-        if (getSelectedIndex() == -1) {
-            new AlertDialog(Alert.AlertType.ERROR,"Nincs kiválasztva cella!","Válassz ki egy cellát.");
-            return;
-        }
-        getCurrentTable().modify(getSelectedIndex());
+        if (!isRowSelected()) return;
+        showForm();
+        if (!getCurrentTable().update(getSelectedIndex(), controller.getInput())) modify();
     }
 
     @FXML
     public void delete() {
-        if (getSelectedIndex() == -1) {
-            new AlertDialog(Alert.AlertType.ERROR,"Nincs kiválasztva cella!","Válassz ki egy cellát.");
-            return;
-        }
+        if (!isRowSelected()) return;
         getCurrentTable().delete(getSelectedIndex());
     }
 
     @FXML
-    public void refresh() {
+    public void refresh(boolean verbose) {
         getCurrentTable().refresh();
-        new AlertDialog(Alert.AlertType.INFORMATION,"Frissítés","Adatok lekérése sikeres!");
+        if (verbose) new AlertDialog(Alert.AlertType.INFORMATION, "Frissítés", "Adatok lekérése sikeres!");
     }
 
     public Tab getCurrentTab() {
-        currentTab = tabPane.getSelectionModel().getSelectedItem();
         return currentTab;
     }
 
     public DataTable getCurrentTable() {
-        currentTable = (DataTable)tabPane.getSelectionModel().getSelectedItem().getContent();
         return currentTable;
     }
 
-    public int getSelectedIndex() {
-        if (currentTable != null) {
-            return currentTable.getSelectionModel().getSelectedIndex();
+    private boolean isRowSelected() {
+        if (getSelectedIndex() == -1) {
+            new AlertDialog(Alert.AlertType.ERROR, "Nincs kiválasztva cella!", "Válassz ki egy cellát.");
+            return false;
         }
-        return -1;
+        return true;
+    }
+
+    public int getSelectedIndex() {
+        return currentTable.getSelectionModel().getSelectedIndex();
+    }
+
+    private void createTable(Tab tab) {
+        DataInfo info = DataInfo.getInstance();
+
+        tab.setOnSelectionChanged(event -> {
+            currentTab = (Tab) event.getTarget();
+            currentTable = (DataTable) currentTab.getContent();
+            refresh(false);
+        });
+
+        DataTable t = info.getTable(tab.getId());
+        tab.setContent(t);
     }
 
     // ------------------------

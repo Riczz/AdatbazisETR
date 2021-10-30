@@ -1,13 +1,13 @@
-package view.tables;
+package application.view.tables;
 
-import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
-import model.pojo.User;
-import sample.Database;
-import view.DataColumn;
-import view.DataTable;
+import application.model.pojo.User;
+import application.view.DataColumn;
+import application.view.DataTable;
+
+import java.util.List;
 
 
 public class UserTable extends DataTable<User> {
@@ -23,7 +23,7 @@ public class UserTable extends DataTable<User> {
         lastname.setCellFactory(TextFieldTableCell.forTableColumn());
         lastname.setCellValueFactory(new PropertyValueFactory<User, String>("lastname"));
 
-        DataColumn firstname = new DataColumn("vezeteknev");
+        DataColumn firstname = new DataColumn("keresztnev");
         firstname.setCellFactory(TextFieldTableCell.forTableColumn());
         firstname.setCellValueFactory(new PropertyValueFactory<User, String>("firstname"));
 
@@ -35,35 +35,44 @@ public class UserTable extends DataTable<User> {
         teacher.setCellFactory(tableColumn -> new CheckBoxTableCell<>());
         teacher.setCellValueFactory(new PropertyValueFactory<User, Boolean>("teacher"));
 
-        Database db = new Database();
-        setItems(db.getUsers());
-        db.close();
-        getColumns().addAll(neptun,lastname,firstname,student,teacher);
+        refresh();
+        getColumns().addAll(neptun, lastname, firstname, student, teacher);
     }
 
     @Override
-    public void insert() {
+    public boolean insert(List<String> input) {
+        User user = new User(
+                input.get(0),
+                input.get(1),
+                input.get(2)
+        );
 
+        if (!db.insert(user)) return false;
+        refresh();
+        return true;
     }
 
     @Override
-    public void modify(int i) {
+    public boolean update(int i, List<String> input) {
+        User user = new User(
+                input.get(0),
+                input.get(1),
+                input.get(2)
+        );
 
+        if (!db.update(getItems().get(i), user)) return false;
+        refresh();
+        return true;
     }
 
     @Override
     public void delete(int i) {
-        data.clear();
-        getItems().clear();
-
-        db.connect();
-        data = db.getUsers();
-        setItems(data);
-        db.close();
+        db.delete(getItems().get(i));
+        refresh();
     }
 
     @Override
     public void refresh() {
-
+        setItems(db.getUsers());
     }
 }

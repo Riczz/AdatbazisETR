@@ -1,4 +1,4 @@
-package sample;
+package application;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -15,8 +15,8 @@ public class Main extends Application {
     public void start(Stage stage) throws Exception {
         Scene scene = new Scene(loadFXML("sample"));
         scene.getStylesheets().add(this.getClass().getResource("css/style.css").toExternalForm());
-        stage.setScene(scene);
         stage.initStyle(StageStyle.UNDECORATED);
+        stage.setScene(scene);
         stage.show();
     }
 

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.QueriesController">
+   <center>
+      <ScrollPane prefHeight="200.0" prefWidth="545.0" BorderPane.alignment="CENTER">
+         <content>
+            <VBox prefHeight="600.0" prefWidth="1000.0" spacing="30.0">
+               <children>
+                  <Group>
+                     <children>
+                        <Label prefHeight="30.0" prefWidth="1000.0" text="1. Felhasználók száma megyénként csökkenő sorrendben">
+                           <font>
+                              <Font name="System Bold" size="32.0" />
+                           </font>
+                        </Label>
+                        <TableView fx:id="table1" layoutY="47.0" prefHeight="200.0" prefWidth="1000.0" />
+                     </children>
+                  </Group>
+                  <Group>
+                     <children>
+                        <Label prefHeight="30.0" prefWidth="1000.0" text="2. Vizsgák átlaga tárgyak szerint">
+                           <font>
+                              <Font name="System Bold" size="32.0" />
+                           </font>
+                        </Label>
+                        <TableView fx:id="table2" layoutY="47.0" prefHeight="200.0" prefWidth="1000.0" />
+                     </children>
+                  </Group>
+                  <Group>
+                     <children>
+                        <Label prefHeight="30.0" prefWidth="1000.0" text="Label">
+                           <font>
+                              <Font name="System Bold" size="32.0" />
+                           </font>
+                        </Label>
+                        <TableView fx:id="table3" layoutY="47.0" prefHeight="200.0" prefWidth="1000.0" />
+                     </children>
+                  </Group>
+               </children>
+            </VBox>
+         </content>
+      </ScrollPane>
+   </center>
+</BorderPane>

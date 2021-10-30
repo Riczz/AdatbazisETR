@@ -1,16 +1,14 @@
-package view;
+package application.view;
 
-
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.scene.control.Label;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableView;
-import sample.Database;
+import application.Database;
+
+import java.util.List;
 
 public abstract class DataTable<T> extends TableView<T> {
 
-    protected ObservableList<T> data = FXCollections.observableArrayList();
     protected Database db = new Database(false);
 
     public DataTable() {
@@ -20,9 +18,9 @@ public abstract class DataTable<T> extends TableView<T> {
         getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
     }
 
-    public abstract void insert();
+    public abstract boolean insert(List<String> input);
 
-    public abstract void modify(int i);
+    public abstract boolean update(int i, List<String> input);
 
     public abstract void delete(int i);
 

@@ -1,11 +1,11 @@
-package view.dialog;
+package application.view.dialog;
 
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import view.DataTable;
+import application.view.DataTable;
 
 public class InsertDialog extends DialogPane {
 
