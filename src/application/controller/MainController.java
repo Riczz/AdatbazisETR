@@ -23,7 +23,7 @@ import javafx.stage.StageStyle;
 
 import java.io.IOException;
 
-public class MainController {
+public final class MainController {
 
     @FXML
     private TabPane tabPane;
@@ -31,12 +31,6 @@ public class MainController {
     private BorderPane mainPane;
     @FXML
     private Rectangle minBtn;
-    @FXML
-    private Button insertBtn;
-    @FXML
-    private Button modifyBtn;
-    @FXML
-    private Button delBtn;
     @FXML
     private Button refreshBtn;
 

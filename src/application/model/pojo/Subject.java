@@ -4,7 +4,7 @@ import application.Database;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
-public class Subject {
+public final class Subject {
 
     private SimpleStringProperty sub_code, reqSub_code, neptun, name;
     private SimpleIntegerProperty credits, hours;

@@ -3,7 +3,7 @@ package application.view;
 
 import javafx.scene.control.TableColumn;
 
-public class DataColumn extends TableColumn {
+public final class DataColumn extends TableColumn {
 
     public DataColumn(String text) {
         super(text);

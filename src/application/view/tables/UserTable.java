@@ -9,7 +9,7 @@ import application.view.DataTable;
 import java.util.List;
 
 
-public class UserTable extends DataTable<User> {
+public final class UserTable extends DataTable<User> {
 
     public UserTable() {
         super();

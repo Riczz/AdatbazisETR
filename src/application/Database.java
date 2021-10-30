@@ -13,7 +13,7 @@ import javafx.scene.control.Tooltip;
 
 import java.sql.*;
 
-public class Database {
+public final class Database {
 
     public static final String URL = "jdbc:mysql://localhost:3306/etr";
     public static final String ROOT = "root";

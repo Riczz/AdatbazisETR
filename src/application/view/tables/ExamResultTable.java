@@ -11,7 +11,7 @@ import javafx.util.converter.IntegerStringConverter;
 
 import java.util.List;
 
-public class ExamResultTable extends DataTable<ExamResult> {
+public final class ExamResultTable extends DataTable<ExamResult> {
 
     public ExamResultTable() {
 

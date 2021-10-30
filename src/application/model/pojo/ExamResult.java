@@ -3,7 +3,7 @@ package application.model.pojo;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
-public class ExamResult {
+public final class ExamResult {
 
     private SimpleStringProperty neptun, subCode;
     private SimpleIntegerProperty no, result;

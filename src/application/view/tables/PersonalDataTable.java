@@ -12,7 +12,7 @@ import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 
-public class PersonalDataTable extends DataTable<PersonalData> {
+public final class PersonalDataTable extends DataTable<PersonalData> {
 
     public PersonalDataTable() {
         super();

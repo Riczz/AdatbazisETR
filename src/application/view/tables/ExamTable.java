@@ -10,7 +10,7 @@ import javafx.util.converter.IntegerStringConverter;
 import java.sql.Timestamp;
 import java.util.List;
 
-public class ExamTable extends DataTable<Exam> {
+public final class ExamTable extends DataTable<Exam> {
 
     public ExamTable() {
 

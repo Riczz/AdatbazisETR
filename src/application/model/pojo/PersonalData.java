@@ -5,7 +5,7 @@ import javafx.beans.property.SimpleStringProperty;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class PersonalData {
+public final class PersonalData {
 
     public static final SimpleDateFormat DATEFORM = new SimpleDateFormat("yyyy-MM-dd");
     private SimpleStringProperty neptun, birthPlace, birthName, birthDate, birthCounty, birthCountry, gender;

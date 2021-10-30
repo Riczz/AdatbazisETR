@@ -14,14 +14,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class FormController {
+public final class FormController {
 
     @FXML
     private Label label;
     @FXML
     private GridPane grid;
-    @FXML
-    private Button applyBtn;
     @FXML
     private AnchorPane mainPane;
 

@@ -1,13 +1,12 @@
 package application.model;
 
-import application.model.pojo.Exam;
 import application.view.DataTable;
 import application.view.tables.*;
 
 import java.util.HashMap;
 import java.util.Set;
 
-public class DataInfo {
+public final class DataInfo {
 
     private static final HashMap<String, String> tableLabels = new HashMap<>();
     private static final HashMap<String, DataTable> tables = new HashMap<>();

@@ -5,7 +5,7 @@ import javafx.beans.property.SimpleStringProperty;
 
 import java.sql.Timestamp;
 
-public class Exam {
+public final class Exam {
 
     private SimpleStringProperty subCode, time;
     private SimpleIntegerProperty roomNum;

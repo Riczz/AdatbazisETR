@@ -10,7 +10,7 @@ import javafx.util.converter.IntegerStringConverter;
 import java.util.List;
 
 
-public class SubjectTable extends DataTable<Subject> {
+public final class SubjectTable extends DataTable<Subject> {
 
     public SubjectTable() {
         super();

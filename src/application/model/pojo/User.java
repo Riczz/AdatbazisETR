@@ -2,7 +2,7 @@ package application.model.pojo;
 
 import javafx.beans.property.SimpleStringProperty;
 
-public class User {
+public final class User {
 
     private SimpleStringProperty neptun, lastname, firstname;
 

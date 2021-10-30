@@ -12,7 +12,7 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.converter.DoubleStringConverter;
 import javafx.util.converter.IntegerStringConverter;
 
-public class QueriesController {
+public final class QueriesController {
 
     @FXML
     TableView<Query1> table1;
