@@ -12,6 +12,8 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.Tooltip;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public final class Database {
 
@@ -560,9 +562,18 @@ public final class Database {
             try {
                 DataInfo info = DataInfo.getInstance();
                 DatabaseMetaData meta = conn.getMetaData();
-                //ResultSet rs = meta.getTables("etr", null, null, null);
+                ResultSet rs = meta.getTables("etr", null, null, null);
+
+                List<String> tableNames = new ArrayList<>();
+                while (rs.next()) {
+                    tableNames.add(rs.getString(3));
+                }
 
                 for (String key : info.keys()) {
+                    if (!tableNames.contains(key)) {
+                        System.err.println(key + " tábla nem található!");
+                        continue;
+                    }
                     Tab tab = new Tab(info.getLabel(key));
                     tab.setTooltip(new Tooltip(info.getLabel(key)));
                     tab.setId(key);
