@@ -513,7 +513,7 @@ public final class Database {
 
     public ObservableList<QueriesController.Query1> extraQuery1() {
         ObservableList<QueriesController.Query1> items = FXCollections.observableArrayList();
-        String sql = "SELECT szemelyes_adat.szuletesi_megye, COUNT(szemelyes_adat.neptun_kod) AS letszam FROM felhasznalo " +
+        String sql = "SELECT szemelyes_adat.szuletesi_megye, COUNT(*) AS letszam FROM felhasznalo " +
                 "INNER JOIN szemelyes_adat ON felhasznalo.neptun_kod = szemelyes_adat.neptun_kod " +
                 "GROUP BY szemelyes_adat.szuletesi_megye ORDER BY letszam DESC";
 
